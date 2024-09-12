@@ -6,7 +6,12 @@ import {Checkbox} from "antd";
 import i18next from "i18next";
 import {Banner} from "./Banner";
 
-const CustomFormDesktop = ({application}) => {
+const CustomFormDesktop = ({
+  application,
+  providers: {
+    github: githubProvider,
+  },
+}) => {
   const [autoSignin, setAutoSignin] = useState(true);
 
   return (
@@ -40,9 +45,10 @@ const CustomFormDesktop = ({application}) => {
             alignItems: "center",
           }}
         >
-          <GithubButton
+          {githubProvider && <GithubButton
             application={application}
-          />
+            provider={githubProvider}
+          />}
           <Checkbox
             checked={autoSignin}
             onChange={(e) => {
@@ -83,7 +89,9 @@ const GoPlusSvg = () => (
   </svg>
 );
 
-export const CustomFormMobile = ({application}) => {
+export const CustomFormMobile = ({application, providers: {
+  github: githubProvider,
+}}) => {
   const [autoSignin, setAutoSignin] = useState(true);
 
   return (
@@ -130,9 +138,10 @@ export const CustomFormMobile = ({application}) => {
             languages={application.organizationObj.languages}
             dark={true}
           />
-          <GithubButton
+          {githubProvider && <GithubButton
             application={application}
-          />
+            provider={githubProvider}
+          />}
           <Checkbox
             style={{color: "white"}}
             checked={autoSignin}
@@ -164,10 +173,13 @@ const useMediaQuery = (query) => {
 export const CustomForm = ({application}) => {
   // use media query to determine which form to show
   const isMobile = useMediaQuery("(max-width: 768px)");
+  const providers = {
+    github: application.providers.find((provider) => /github/i.test(provider.name))?.provider,
+  };
 
   return isMobile ? (
-    <CustomFormMobile application={application} />
+    <CustomFormMobile application={application} providers={providers} />
   ) : (
-    <CustomFormDesktop application={application} />
+    <CustomFormDesktop application={application} providers={providers} />
   );
 };
