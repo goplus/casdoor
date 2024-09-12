@@ -14,9 +14,9 @@
 
 import React from "react";
 import * as Setting from "../../Setting";
-import {Dropdown} from "antd";
+import {Button, Dropdown, Space} from "antd";
 import "../../App.less";
-import {GlobalOutlined} from "@ant-design/icons";
+import {DownOutlined} from "@ant-design/icons";
 
 function flagIcon(country, alt) {
   return (
@@ -30,6 +30,7 @@ class LanguageSelect extends React.Component {
     this.state = {
       classes: props,
       languages: props.languages ?? Setting.Countries.map(item => item.key),
+      dark: props.dark ?? false,
     };
 
     Setting.Countries.forEach((country) => {
@@ -52,12 +53,20 @@ class LanguageSelect extends React.Component {
     const onClick = (e) => {
       Setting.setLanguage(e.key);
     };
+    const currentLanguage = Setting.getLanguage();
+    const languageName = languageItems.find((item) => item.key === currentLanguage).label;
 
     return (
       <Dropdown menu={{items: languageItems, onClick}} >
-        <div className="select-box" style={{display: languageItems.length === 0 ? "none" : null, ...this.props.style}} >
-          <GlobalOutlined style={{fontSize: "24px"}} />
-        </div>
+        <Button style={{
+          color: this.state.dark && "white",
+          backgroundColor: this.state.dark && "rgba(0, 0, 0, 0)",
+        }}>
+          <Space>
+            {languageName}
+            <DownOutlined />
+          </Space>
+        </Button>
       </Dropdown>
     );
   }

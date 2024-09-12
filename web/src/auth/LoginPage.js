@@ -36,6 +36,7 @@ import RedirectForm from "../common/RedirectForm";
 import {MfaAuthVerifyForm, NextMfa, RequiredMfa} from "./mfa/MfaAuthVerifyForm";
 import {GoogleOneTapLoginVirtualButton} from "./GoogleLoginButton";
 import * as ProviderButton from "./ProviderButton";
+import {CustomForm} from "./oauth-customization/CustomForm";
 const FaceRecognitionModal = lazy(() => import("../common/modal/FaceRecognitionModal"));
 
 class LoginPage extends React.Component {
@@ -1271,6 +1272,12 @@ class LoginPage extends React.Component {
           <Spin size="large" tip={i18next.t("login:Signing in...")} />
         </div>
       );
+    }
+
+    if (/oauth\/authorize/.test(location.href)) {
+      return <CustomForm
+        application={application}
+      />;
     }
 
     return (
