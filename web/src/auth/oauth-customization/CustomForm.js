@@ -1,19 +1,14 @@
 import {useEffect, useState} from "react";
 import bgMobilePng from "./bg-mobile.png";
 import LanguageSelect from "../../common/select/LanguageSelect";
-import {GithubButton} from "./GithubButton";
-import {Checkbox} from "antd";
-import i18next from "i18next";
+import {LoginButton} from "./LoginButton";
 import {Banner} from "./Banner";
 
-const CustomFormDesktop = ({
-  application,
-  providers: {
-    github: githubProvider,
-  },
-}) => {
-  const [autoSignin, setAutoSignin] = useState(true);
+const filterProviders = (providers) => {
+  return providers.filter((provider) => provider.canSignIn && provider.canSignUp);
+};
 
+const CustomFormDesktop = ({application}) => {
   return (
     <div
       style={{
@@ -38,27 +33,16 @@ const CustomFormDesktop = ({
         </div>
         <div
           style={{
-            maxWidth: "295px",
+            width: "295px",
             gap: 12,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
           }}
         >
-          {githubProvider && <GithubButton
-            application={application}
-            provider={githubProvider}
-          />}
-          <Checkbox
-            checked={autoSignin}
-            onChange={(e) => {
-              setAutoSignin(e.target.checked);
-            }}
-          >
-            {/* TODO: We can just remove this checkbox */}
-            {i18next.t("login:Auto sign in")}
-          </Checkbox>
-
+          {filterProviders(application.providers).map((provider) => (
+            <LoginButton key={provider.type} application={application} provider={provider.provider} />
+          ))}
         </div>
       </div>
     </div>
@@ -89,10 +73,7 @@ const GoPlusSvg = () => (
   </svg>
 );
 
-export const CustomFormMobile = ({application, providers: {
-  github: githubProvider,
-}}) => {
-  const [autoSignin, setAutoSignin] = useState(true);
+export const CustomFormMobile = ({application}) => {
 
   return (
     <div style={{
@@ -132,25 +113,16 @@ export const CustomFormMobile = ({application, providers: {
             gap: 20,
             flexDirection: "column",
             alignItems: "flex-start",
+            width: "295px",
           }}
         >
           <LanguageSelect
             languages={application.organizationObj.languages}
             dark={true}
           />
-          {githubProvider && <GithubButton
-            application={application}
-            provider={githubProvider}
-          />}
-          <Checkbox
-            style={{color: "white"}}
-            checked={autoSignin}
-            onChange={(e) => {
-              setAutoSignin(e.target.checked);
-            }}
-          >
-            {i18next.t("login:Auto sign in")}
-          </Checkbox>
+          {filterProviders(application.providers).map((provider) => (
+            <LoginButton key={provider.type} application={application} provider={provider.provider} />
+          ))}
         </div>
       </div>
     </div>
@@ -173,13 +145,10 @@ const useMediaQuery = (query) => {
 export const CustomForm = ({application}) => {
   // use media query to determine which form to show
   const isMobile = useMediaQuery("(max-width: 768px)");
-  const providers = {
-    github: application.providers.find((provider) => /github/i.test(provider.name))?.provider,
-  };
 
   return isMobile ? (
-    <CustomFormMobile application={application} providers={providers} />
+    <CustomFormMobile application={application} />
   ) : (
-    <CustomFormDesktop application={application} providers={providers} />
+    <CustomFormDesktop application={application} />
   );
 };
