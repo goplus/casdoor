@@ -22,7 +22,6 @@ export const Banner = () => {
         flexDirection: "column",
         textAlign: "center",
       }}>
-        {/* TODO: i18n */}
         <div>Welcome to Go+ Community</div>
         <div style={{display: "flex"}}>for&nbsp;
           <TextLoop

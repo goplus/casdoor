@@ -19,7 +19,6 @@ const TextLoop = ({texts, duration = 2000}) => {
     fontWeight: 700,
     fontSize: "68px",
     color: "rgba(64, 106, 255, 1)",
-    // no wrap
     whiteSpace: "nowrap",
   };
 
