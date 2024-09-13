@@ -1,5 +1,6 @@
 import i18next from "i18next";
 import {getAuthUrl} from "../Provider";
+import {getProviderLogoURL} from "../../Setting";
 
 const providerInfo = {
   github: {
@@ -14,7 +15,7 @@ const providerInfo = {
 
 export const LoginButton = ({application, provider}) => {
   const {icon, backgroundColor} = providerInfo[provider.type.toLowerCase()] || {
-    icon: null,
+    icon: <img src={getProviderLogoURL(provider)} alt={`Sign in with ${provider.type}`} style={{width: 24, height: 24}} />,
     backgroundColor: "#333",
   };
 
