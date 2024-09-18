@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import bgMobilePng from "./bg-mobile.png";
+import bgMobile from "./bg-mobile.jpg";
 import LanguageSelect from "../../common/select/LanguageSelect";
 import {LoginButton} from "./LoginButton";
 import {Banner} from "./Banner";
@@ -86,7 +86,7 @@ export const CustomFormMobile = ({application}) => {
     }}>
       <div
         style={{
-          backgroundImage: `url(${bgMobilePng})`,
+          backgroundImage: `url(${bgMobile})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           position: "fixed",

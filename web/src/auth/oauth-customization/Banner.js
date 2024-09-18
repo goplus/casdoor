@@ -1,10 +1,10 @@
 import TextLoop from "./TextLoop";
-import bgPng from "./bg.png";
+import bg from "./bg.jpg";
 
 export const Banner = () => {
   return (
     <div style={{
-      backgroundImage: `url(${bgPng})`,
+      backgroundImage: `url(${bg})`,
       backgroundSize: "cover",
       backgroundPosition: "center",
       height: "371px",
