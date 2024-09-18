@@ -14,9 +14,8 @@
 
 import React from "react";
 import * as Setting from "../../Setting";
-import {Button, Dropdown, Space} from "antd";
+import {Button, Dropdown} from "antd";
 import "../../App.less";
-import {DownOutlined} from "@ant-design/icons";
 
 function flagIcon(country, alt) {
   return (
@@ -62,10 +61,12 @@ class LanguageSelect extends React.Component {
           color: this.state.dark && "white",
           backgroundColor: this.state.dark && "rgba(0, 0, 0, 0)",
         }}>
-          <Space>
+          <div style={{display: "flex", alignItems: "center", gap: 12}}>
             {languageName}
-            <DownOutlined />
-          </Space>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 7.00037L7.64645 10.6468C7.84171 10.8421 8.15829 10.8421 8.35355 10.6468L12 7.00037" stroke="#24292F" strokeLinecap="round" />
+            </svg>
+          </div>
         </Button>
       </Dropdown>
     );

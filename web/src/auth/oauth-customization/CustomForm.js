@@ -146,9 +146,16 @@ export const CustomForm = ({application}) => {
   // use media query to determine which form to show
   const isMobile = useMediaQuery("(max-width: 768px)");
 
-  return isMobile ? (
-    <CustomFormMobile application={application} />
-  ) : (
-    <CustomFormDesktop application={application} />
-  );
+  return <>
+    {isMobile ? (
+      <CustomFormMobile application={application} />
+    ) : (
+      <CustomFormDesktop application={application} />
+    )}
+    <style>
+      {`.ant-layout-footer {
+        background: #fff !important;
+      }`}
+    </style>
+  </>;
 };
