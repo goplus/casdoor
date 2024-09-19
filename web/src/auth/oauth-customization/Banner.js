@@ -23,13 +23,9 @@ export const Banner = () => {
         textAlign: "center",
       }}>
         <div>Welcome to Go+ Community</div>
-        <div style={{display: "flex"}}>for&nbsp;
-          <TextLoop
-            texts={["Engineering", "STEM Education", "Data Science"]}
-            duration={1500}
-          />
-          <div style={{width: "527px"}} />
-        </div>
+        <TextLoop
+          texts={["Engineering", "STEM Education", "Data Science"]}
+        />
       </div>
 
     </div>

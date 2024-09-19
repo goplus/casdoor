@@ -23,39 +23,37 @@ const TextLoop = ({texts, duration = 2000}) => {
   };
 
   return (
-    <span style={{position: "relative", height: "100px"}}>
+    <span style={{position: "relative", height: "100px", width: "100%", overflow: "hidden"}}>
       <AnimatePresence initial={false}>
-        <motion.span
+        <motion.div
           key={currentIndex}
-          initial={{opacity: 1, y: 0}}
-          animate={{opacity: 0, y: -88}}
-          exit={{opacity: 0, y: -88}}
+          initial={{y: 0}}
+          animate={{y: -88}}
+          exit={{y: -88}}
           transition={{
-            duration: 1,
-            type: "spring",
-            stiffness: 300,
-            damping: 20,
+            duration: 0.8,
+            ease: "linear",
           }}
-          style={{...textStyle, position: "absolute", width: "100%", textAlign: "center"}}
+          style={{position: "absolute", width: "100%", textAlign: "center"}}
         >
-          {texts[currentIndex]}
-        </motion.span>
+          <span>for </span>
+          <span style={textStyle}>{texts[currentIndex]}</span>
+        </motion.div>
 
-        <motion.span
+        <motion.div
           key={nextIndex}
-          initial={{opacity: 0, y: 88}}
-          animate={{opacity: 1, y: 0}}
-          exit={{opacity: 1, y: 0}}
+          initial={{y: 88}}
+          animate={{y: 0}}
+          exit={{y: 0}}
           transition={{
-            duration: 1,
-            type: "spring",
-            stiffness: 300,
-            damping: 20,
+            duration: 0.8,
+            ease: "linear",
           }}
-          style={{...textStyle, position: "absolute", width: "100%", textAlign: "center"}}
+          style={{position: "absolute", width: "100%", textAlign: "center"}}
         >
-          {texts[nextIndex]}
-        </motion.span>
+          <span>for </span>
+          <span style={textStyle}>{texts[nextIndex]}</span>
+        </motion.div>
       </AnimatePresence>
     </span>
   );
