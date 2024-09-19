@@ -64,7 +64,7 @@ class LanguageSelect extends React.Component {
           <div style={{display: "flex", alignItems: "center", gap: 12}}>
             {languageName}
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M4 7.00037L7.64645 10.6468C7.84171 10.8421 8.15829 10.8421 8.35355 10.6468L12 7.00037" stroke="#24292F" strokeLinecap="round" />
+              <path d="M4 7.00037L7.64645 10.6468C7.84171 10.8421 8.15829 10.8421 8.35355 10.6468L12 7.00037" stroke="currentColor" strokeLinecap="round" />
             </svg>
           </div>
         </Button>
