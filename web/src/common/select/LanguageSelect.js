@@ -14,9 +14,8 @@
 
 import React from "react";
 import * as Setting from "../../Setting";
-import {Dropdown} from "antd";
+import {Button, Dropdown} from "antd";
 import "../../App.less";
-import {GlobalOutlined} from "@ant-design/icons";
 
 function flagIcon(country, alt) {
   return (
@@ -30,6 +29,7 @@ class LanguageSelect extends React.Component {
     this.state = {
       classes: props,
       languages: props.languages ?? Setting.Countries.map(item => item.key),
+      dark: props.dark ?? false,
     };
 
     Setting.Countries.forEach((country) => {
@@ -52,12 +52,22 @@ class LanguageSelect extends React.Component {
     const onClick = (e) => {
       Setting.setLanguage(e.key);
     };
+    const currentLanguage = Setting.getLanguage();
+    const languageName = languageItems.find((item) => item.key === currentLanguage).label;
 
     return (
       <Dropdown menu={{items: languageItems, onClick}} >
-        <div className="select-box" style={{display: languageItems.length === 0 ? "none" : null, ...this.props.style}} >
-          <GlobalOutlined style={{fontSize: "24px"}} />
-        </div>
+        <Button style={{
+          color: this.state.dark && "white",
+          backgroundColor: this.state.dark && "rgba(0, 0, 0, 0)",
+        }}>
+          <div style={{display: "flex", alignItems: "center", gap: 12}}>
+            {languageName}
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 7.00037L7.64645 10.6468C7.84171 10.8421 8.15829 10.8421 8.35355 10.6468L12 7.00037" stroke="currentColor" strokeLinecap="round" />
+            </svg>
+          </div>
+        </Button>
       </Dropdown>
     );
   }
