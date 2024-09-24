@@ -176,7 +176,7 @@ class AuthCallback extends React.Component {
               return;
             }
             const code = res.data;
-            Setting.goToLink(`${oAuthParams.redirectUri}${concatChar}code=${code}&state=${oAuthParams.state}`);
+            Setting.goToLink(`${oAuthParams.redirectUri}${concatChar}code=${code}&state=${oAuthParams.state}&language=${Setting.getLanguage()}`);
             // Setting.showMessage("success", `Authorization code: ${res.data}`);
           } else if (responseType === "token" || responseType === "id_token") {
             if (res.data2) {
