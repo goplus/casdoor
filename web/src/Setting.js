@@ -28,7 +28,7 @@ import moment from "moment";
 
 const {Option} = Select;
 
-export const ServerUrl = "";
+export const ServerUrl = process.env.REACT_APP_SERVER_URL || "";
 
 export const StaticBaseUrl = "https://cdn.casbin.org";
 
