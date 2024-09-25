@@ -4,7 +4,7 @@
 set -e
 
 # Build backend
-go build
+CGO_ENABLED=0 go build
 
 # Build frontend
 cd web
