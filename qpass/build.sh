@@ -9,7 +9,7 @@ CGO_ENABLED=0 go build
 # Build frontend
 cd web
 yarn install --frozen-lockfile --network-timeout 1000000
-yarn run build
+FRONTEND_ENV=production yarn run build
 cd ..
 
 # Copy result
