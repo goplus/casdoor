@@ -1,5 +1,8 @@
 const CracoLessPlugin = require("craco-less");
 
+// We use CDN for static files in production
+const staticUrl = process.env.FRONTEND_ENV === 'production' ? 'https://acc-static.gopluscdn.com/' : '/'
+
 module.exports = {
   devServer: {
     proxy: {
@@ -56,6 +59,9 @@ module.exports = {
   ],
   webpack: {
     configure: {
+      output: {
+        publicPath: staticUrl
+      },
       // ignore webpack warnings by source-map-loader 
       // https://github.com/facebook/create-react-app/pull/11752#issuecomment-1345231546
       ignoreWarnings: [
