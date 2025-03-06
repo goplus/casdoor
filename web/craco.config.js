@@ -1,7 +1,7 @@
 const CracoLessPlugin = require("craco-less");
 
 // We use CDN for static files in production
-const staticUrl = process.env.FRONTEND_ENV === 'production' ? 'https://acc-static.gopluscdn.com/' : '/'
+const staticUrl = process.env.STATIC_URL || '/'
 
 module.exports = {
   devServer: {
