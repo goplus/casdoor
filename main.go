@@ -16,6 +16,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/beego/beego"
 	"github.com/beego/beego/logs"
@@ -63,12 +64,16 @@ func main() {
 
 	beego.BConfig.WebConfig.Session.SessionOn = true
 	beego.BConfig.WebConfig.Session.SessionName = "casdoor_session_id"
-	if conf.GetConfigString("redisEndpoint") == "" {
+	redisEndpoint := conf.GetConfigString("redisEndpoint")
+	if redisEndpoint == "" {
 		beego.BConfig.WebConfig.Session.SessionProvider = "file"
 		beego.BConfig.WebConfig.Session.SessionProviderConfig = "./tmp"
+	} else if strings.Contains(redisEndpoint, ";") {
+		beego.BConfig.WebConfig.Session.SessionProvider = "redis_cluster"
+		beego.BConfig.WebConfig.Session.SessionProviderConfig = redisEndpoint
 	} else {
 		beego.BConfig.WebConfig.Session.SessionProvider = "redis"
-		beego.BConfig.WebConfig.Session.SessionProviderConfig = conf.GetConfigString("redisEndpoint")
+		beego.BConfig.WebConfig.Session.SessionProviderConfig = redisEndpoint
 	}
 	beego.BConfig.WebConfig.Session.SessionCookieLifeTime = 3600 * 24 * 30
 	beego.BConfig.WebConfig.Session.SessionGCMaxLifetime = 3600 * 24 * 30
