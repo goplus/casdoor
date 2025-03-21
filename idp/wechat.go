@@ -238,7 +238,7 @@ func (idp *WeChatIdProvider) GetUserInfo(token *oauth2.Token) (*UserInfo, error)
 	extra[BuildWechatOpenIdKey(idp.Config.ClientID)] = wechatUserInfo.Openid
 	userInfo := UserInfo{
 		Id:          id,
-		Username:    BuildNickName(wechatUserInfo.Nickname, id),
+		Username:    BuildUsername(wechatUserInfo.Nickname, id),
 		DisplayName: wechatUserInfo.Nickname,
 		AvatarUrl:   wechatUserInfo.Headimgurl,
 		Extra:       extra,
@@ -250,9 +250,9 @@ func BuildWechatOpenIdKey(appId string) string {
 	return fmt.Sprintf("wechat_openid_%s", appId)
 }
 
-func BuildNickName(username, id string) string {
-	if !util.ReUserName.MatchString(username) {
-		return username
+func BuildUsername(nickname, id string) string {
+	if !util.ReUserName.MatchString(nickname) {
+		return nickname
 	}
 	// Get last 8 characters of id, or the whole id if it's less than 8 characters
 	idLen := len(id)
