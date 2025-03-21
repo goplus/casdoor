@@ -251,7 +251,7 @@ func BuildWechatOpenIdKey(appId string) string {
 }
 
 func BuildUsername(nickname, id string) string {
-	if !util.ReUserName.MatchString(nickname) {
+	if util.ReUserName.MatchString(nickname) {
 		return nickname
 	}
 	// Get last 8 characters of id, or the whole id if it's less than 8 characters
