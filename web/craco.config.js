@@ -1,45 +1,52 @@
 const CracoLessPlugin = require("craco-less");
+const webpack = require("webpack");
 
 // We use CDN for static files in production
 const staticUrl = process.env.STATIC_URL || '/'
+/**
+ * Build target, `"goplus" | "xbuilder"`
+ * - `goplus`(default): account management system for GoPlus applications
+ * - `xbuilder`: account management system for application XBuilder
+ */
+const target = process.env.TARGET || 'goplus'
 
 module.exports = {
   devServer: {
     proxy: {
       "/api": {
-        target: "http://localhost:8000",
+        target: "https://goplus-casdoor.qiniu.io",
         changeOrigin: true,
       },
       "/swagger": {
-        target: "http://localhost:8000",
+        target: "https://goplus-casdoor.qiniu.io",
         changeOrigin: true,
       },
       "/files": {
-        target: "http://localhost:8000",
+        target: "https://goplus-casdoor.qiniu.io",
         changeOrigin: true,
       },
       "/.well-known/openid-configuration": {
-        target: "http://localhost:8000",
+        target: "https://goplus-casdoor.qiniu.io",
         changeOrigin: true,
       },
       "/cas/serviceValidate": {
-        target: "http://localhost:8000",
+        target: "https://goplus-casdoor.qiniu.io",
         changeOrigin: true,
       },
       "/cas/proxyValidate": {
-        target: "http://localhost:8000",
+        target: "https://goplus-casdoor.qiniu.io",
         changeOrigin: true,
       },
       "/cas/proxy": {
-        target: "http://localhost:8000",
+        target: "https://goplus-casdoor.qiniu.io",
         changeOrigin: true,
       },
       "/cas/validate": {
-        target: "http://localhost:8000",
+        target: "https://goplus-casdoor.qiniu.io",
         changeOrigin: true,
       },
       "/scim": {
-        target: "http://localhost:8000",
+        target: "https://goplus-casdoor.qiniu.io",
         changeOrigin: true,
       }
     },
@@ -103,5 +110,12 @@ module.exports = {
         },
       }
     },
+    plugins: {
+      add: [
+        new webpack.DefinePlugin({
+          'process.env.TARGET': JSON.stringify(target)
+        })
+      ]
+    }
   }
 };

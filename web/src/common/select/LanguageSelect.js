@@ -47,13 +47,26 @@ class LanguageSelect extends React.Component {
     return select;
   }
 
+  componentDidMount() {
+    const languageItems = this.getOrganizationLanguages(this.state.languages);
+    const currentLanguage = Setting.getLanguage();
+    if (languageItems.length > 0 && !languageItems.find((item) => item.key === currentLanguage)) {
+      Setting.setLanguage(languageItems[0].key);
+    }
+  }
+
   render() {
     const languageItems = this.getOrganizationLanguages(this.state.languages);
+    if (languageItems.length <= 1) {
+      return null;
+    }
+
     const onClick = (e) => {
       Setting.setLanguage(e.key);
     };
     const currentLanguage = Setting.getLanguage();
-    const languageName = languageItems.find((item) => item.key === currentLanguage).label;
+    const languageItem = languageItems.find((item) => item.key === currentLanguage) ?? languageItems[0];
+    const languageName = languageItem.label;
 
     return (
       <Dropdown menu={{items: languageItems, onClick}} >

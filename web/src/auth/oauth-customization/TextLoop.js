@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {AnimatePresence, motion} from "framer-motion";
 
-const TextLoop = ({texts, duration = 2000}) => {
+const TextLoop = ({prefix, texts, duration = 2000}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [nextIndex, setNextIndex] = useState(1);
 
@@ -15,9 +15,6 @@ const TextLoop = ({texts, duration = 2000}) => {
   }, [texts.length, duration]);
 
   const textStyle = {
-    lineHeight: "88px",
-    fontWeight: 700,
-    fontSize: "68px",
     color: "rgba(64, 106, 255, 1)",
     whiteSpace: "nowrap",
   };
@@ -36,7 +33,7 @@ const TextLoop = ({texts, duration = 2000}) => {
           }}
           style={{position: "absolute", width: "100%", textAlign: "center"}}
         >
-          <span>for </span>
+          <span>{prefix}</span>
           <span style={textStyle}>{texts[currentIndex]}</span>
         </motion.div>
 
@@ -51,7 +48,7 @@ const TextLoop = ({texts, duration = 2000}) => {
           }}
           style={{position: "absolute", width: "100%", textAlign: "center"}}
         >
-          <span>for </span>
+          <span>{prefix}</span>
           <span style={textStyle}>{texts[nextIndex]}</span>
         </motion.div>
       </AnimatePresence>
