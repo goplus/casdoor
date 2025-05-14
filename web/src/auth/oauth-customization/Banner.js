@@ -13,19 +13,30 @@ export const Banner = () => {
       justifyContent: "center",
     }}>
       <div style={{
-        lineHeight: "88px",
         fontWeight: 700,
-        fontSize: "68px",
+        fontSize: "65px",
+        lineHeight: "130%",
         color: "#fff",
         display: "flex",
         alignItems: "center",
         flexDirection: "column",
         textAlign: "center",
       }}>
-        <div>Welcome to Go+ Community</div>
-        <TextLoop
-          texts={["Engineering", "STEM Education", "Data Science"]}
-        />
+        {
+          process.env.TARGET === "xbuilder" ? (
+            <div>在 XBuilder<br /><span style={{color: "rgba(64, 106, 255, 1)"}}>创作并分享</span>你的作品</div>
+          ) : (
+            <>
+              <div>
+                Welcome to Go+ Community
+              </div>
+              <TextLoop
+                prefix="for "
+                texts={["Engineering", "STEM Education", "Data Science"]}
+              />
+            </>
+          )
+        }
       </div>
 
     </div>

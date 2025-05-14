@@ -9,7 +9,7 @@ CGO_ENABLED=0 go build
 # Build frontend
 cd web
 yarn install --frozen-lockfile --network-timeout 1000000
-STATIC_URL=${STATIC_URL:-https://acc-static.gopluscdn.com/} yarn run build
+STATIC_URL=${STATIC_URL:-https://acc-static.gopluscdn.com/} TARGET=${TARGET:-goplus} yarn run build
 cd ..
 
 # Copy result
