@@ -396,9 +396,6 @@ class App extends Component {
                 }
               </Content>
               {
-                this.renderFooter()
-              }
-              {
                 this.renderAiAssistant()
               }
             </Layout>

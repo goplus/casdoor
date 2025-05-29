@@ -3,12 +3,6 @@ const webpack = require("webpack");
 
 // We use CDN for static files in production
 const staticUrl = process.env.STATIC_URL || '/'
-/**
- * Build target, `"goplus" | "xbuilder"`
- * - `goplus`(default): account management system for GoPlus applications
- * - `xbuilder`: account management system for application XBuilder
- */
-const target = process.env.TARGET || 'goplus'
 
 module.exports = {
   devServer: {
@@ -112,9 +106,7 @@ module.exports = {
     },
     plugins: {
       add: [
-        new webpack.DefinePlugin({
-          'process.env.TARGET': JSON.stringify(target)
-        })
+        new webpack.DefinePlugin({})
       ]
     }
   }
