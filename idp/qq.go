@@ -184,7 +184,7 @@ func (idp *QqIdProvider) GetUserInfo(token *oauth2.Token) (*UserInfo, error) {
 
 	userInfo := UserInfo{
 		Id:          openId,
-		Username:    qqUserInfo.Nickname,
+		Username:    buildUsername("qq_user_", qqUserInfo.Nickname, openId),
 		DisplayName: qqUserInfo.Nickname,
 		AvatarUrl:   qqUserInfo.FigureurlQq1,
 	}
