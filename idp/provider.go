@@ -19,6 +19,7 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/casdoor/casdoor/util"
 	"golang.org/x/oauth2"
 )
 
@@ -191,4 +192,18 @@ func isGothSupport(provider string) bool {
 		}
 	}
 	return false
+}
+
+func buildUsername(prefix, nickname, id string) string {
+	if util.ReUserName.MatchString(nickname) {
+		return nickname
+	}
+	// Get last 8 characters of id, or the whole id if it's less than 8 characters
+	idLen := len(id)
+	lastPart := id
+	if idLen > 8 {
+		lastPart = id[idLen-8:]
+	}
+	// Return the final nickname total 16 characters
+	return prefix + lastPart
 }

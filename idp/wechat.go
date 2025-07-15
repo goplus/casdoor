@@ -29,7 +29,6 @@ import (
 	"sync"
 	"time"
 
-	"github.com/casdoor/casdoor/util"
 	"github.com/skip2/go-qrcode"
 	"golang.org/x/oauth2"
 )
@@ -238,7 +237,7 @@ func (idp *WeChatIdProvider) GetUserInfo(token *oauth2.Token) (*UserInfo, error)
 	extra[BuildWechatOpenIdKey(idp.Config.ClientID)] = wechatUserInfo.Openid
 	userInfo := UserInfo{
 		Id:          id,
-		Username:    BuildUsername(wechatUserInfo.Nickname, id),
+		Username:    buildUsername("wx_user_", wechatUserInfo.Nickname, id),
 		DisplayName: wechatUserInfo.Nickname,
 		AvatarUrl:   wechatUserInfo.Headimgurl,
 		Extra:       extra,
@@ -248,20 +247,6 @@ func (idp *WeChatIdProvider) GetUserInfo(token *oauth2.Token) (*UserInfo, error)
 
 func BuildWechatOpenIdKey(appId string) string {
 	return fmt.Sprintf("wechat_openid_%s", appId)
-}
-
-func BuildUsername(nickname, id string) string {
-	if util.ReUserName.MatchString(nickname) {
-		return nickname
-	}
-	// Get last 8 characters of id, or the whole id if it's less than 8 characters
-	idLen := len(id)
-	lastPart := id
-	if idLen > 8 {
-		lastPart = id[idLen-8:]
-	}
-	// Return the final nickname total 16 characters
-	return "wx_user_" + lastPart
 }
 
 func GetWechatOfficialAccountAccessToken(clientId string, clientSecret string) (string, string, error) {
