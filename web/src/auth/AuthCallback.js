@@ -22,6 +22,8 @@ import * as Setting from "../Setting";
 import i18next from "i18next";
 import RedirectForm from "../common/RedirectForm";
 
+const safariReloadHash = "_safari_reloaded";
+
 class AuthCallback extends React.Component {
   constructor(props) {
     super(props);
@@ -32,6 +34,22 @@ class AuthCallback extends React.Component {
       relayState: "",
       redirectUrl: "",
     };
+  }
+
+  needsSafariPrivateBrowsingReload() {
+    // Safari Private Browsing strips query parameters from window.location. The callback page should always have query
+    // parameters (code, state, etc.). If location.search is empty, it's likely Safari Private Browsing stripped them.
+
+    const searchIsEmpty = this.props.location.search === "";
+    const alreadyReloaded = window.location.hash.includes(safariReloadHash);
+
+    // Need reload if: search is empty AND haven't reloaded yet
+    return searchIsEmpty && !alreadyReloaded;
+  }
+
+  forceReloadToUnlockParameters() {
+    window.location.hash = safariReloadHash; // Mark that we're attempting reload to prevent infinite loop
+    window.location.reload(); // Force reload to unlock parameters (Safari Private Browsing workaround)
   }
 
   getInnerParams() {
@@ -84,6 +102,12 @@ class AuthCallback extends React.Component {
   }
 
   UNSAFE_componentWillMount() {
+    // Workaround for https://github.com/goplus/builder/issues/2194.
+    if (this.needsSafariPrivateBrowsingReload()) {
+      this.forceReloadToUnlockParameters();
+      return;
+    }
+
     const params = new URLSearchParams(this.props.location.search);
     const isSteam = params.get("openid.mode");
     let code = params.get("code");
