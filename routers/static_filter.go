@@ -132,11 +132,19 @@ func StaticFilter(ctx *context.Context) {
 	} else {
 		path += urlPath
 	}
+	fileExists := util.FileExist(path)
 
-	if strings.Contains(path, "/../") || !util.FileExist(path) {
-		path = webBuildFolder + "/index.html"
+	// For static resources, return 404 if not found instead of fallback to index.html
+	if strings.HasPrefix(urlPath, "/static/") && !fileExists {
+		ctx.ResponseWriter.WriteHeader(http.StatusNotFound)
+		return
 	}
-	if !util.FileExist(path) {
+
+	if strings.Contains(path, "/../") || !fileExists {
+		path = webBuildFolder + "/index.html"
+		fileExists = util.FileExist(path)
+	}
+	if !fileExists {
 		dir, err := os.Getwd()
 		if err != nil {
 			panic(err)
