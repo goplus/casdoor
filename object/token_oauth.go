@@ -332,6 +332,12 @@ func RefreshToken(grantType string, refreshToken string, scope string, clientId 
 	if err != nil {
 		return nil, err
 	}
+	if user == nil {
+		return &TokenError{
+			Error:            InvalidGrant,
+			ErrorDescription: "the user does not exist",
+		}, nil
+	}
 
 	if user.IsForbidden {
 		return &TokenError{

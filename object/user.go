@@ -1115,6 +1115,13 @@ func userChangeTrigger(oldName string, newName string) error {
 		return err
 	}
 
+	token := new(Token)
+	token.User = newName
+	_, err = session.Where("user=?", oldName).Update(token)
+	if err != nil {
+		return err
+	}
+
 	return session.Commit()
 }
 
